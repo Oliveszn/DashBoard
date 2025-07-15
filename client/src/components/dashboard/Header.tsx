@@ -1,9 +1,8 @@
 import { LogOut, Moon, PersonStanding, Settings, Sun } from "lucide-react";
 import { Button } from "../ui/button";
 import { SidebarTrigger } from "../ui/sidebar";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { useEffect } from "react";
-import { setDarkMode, toggleDarkMode } from "../../store/ui-slice/theme-slice";
+import { useAppDispatch } from "../../store/hooks";
+import { toggleDarkMode } from "../../store/ui-slice/theme-slice";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
   DropdownMenu,
@@ -13,26 +12,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { useTheme } from "@/hooks/useTheme";
 
 const Header = () => {
   const dispatch = useAppDispatch();
   /////darkmode
-  const darkMode = useAppSelector((state) => state.theme.theme);
-  useEffect(() => {
-    const savedMode = localStorage.getItem("theme") as "light" | "dark" | null;
-    if (savedMode === "dark" || savedMode === "light") {
-      dispatch(setDarkMode(savedMode));
-    } else {
-      // If no saved preference, check system preference
-      const systemPrefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      const defaultMode = systemPrefersDark ? "dark" : "light";
-      dispatch(setDarkMode(defaultMode));
-      localStorage.setItem("theme", defaultMode);
-    }
-  }, [dispatch]);
-
+  // const darkMode = useAppSelector((state) => state.theme.theme);
+  // useEffect(() => {
+  //   const savedMode = localStorage.getItem("theme") as "light" | "dark" | null;
+  //   if (savedMode === "dark" || savedMode === "light") {
+  //     dispatch(setDarkMode(savedMode));
+  //   } else {
+  //     // If no saved preference, check system preference
+  //     const systemPrefersDark = window.matchMedia(
+  //       "(prefers-color-scheme: dark)"
+  //     ).matches;
+  //     const defaultMode = systemPrefersDark ? "dark" : "light";
+  //     dispatch(setDarkMode(defaultMode));
+  //     localStorage.setItem("theme", defaultMode);
+  //   }
+  // }, [dispatch]);
+  const darkMode = useTheme();
   return (
     <header className="flex items-center justify-between px-4 py-3 shadow-md">
       <SidebarTrigger />

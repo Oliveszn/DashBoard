@@ -27,13 +27,11 @@ const AppSidebar = () => {
       title: "Dashboard",
       links: [
         {
-          id: "dashboard",
           label: "Dashboard",
           path: "dashboard",
           icon: LayoutDashboard,
         },
         {
-          id: "analytics",
           label: "Analytics",
           path: "analytics",
           icon: BadgeCheck,
@@ -46,17 +44,17 @@ const AppSidebar = () => {
         {
           label: "Customers",
           icon: Users,
-          path: "/customers",
+          path: "customers",
         },
         {
           label: "New customer",
           icon: UserPlus,
-          path: "/new-customer",
+          path: "new-customer",
         },
         {
           label: "Verified customers",
           icon: UserCheck,
-          path: "/verified-customers",
+          path: "verified-customers",
         },
       ],
     },
@@ -66,17 +64,17 @@ const AppSidebar = () => {
         {
           label: "Products",
           icon: Package,
-          path: "/products",
+          path: "products",
         },
         {
           label: "New product",
           icon: PackagePlus,
-          path: "/new-product",
+          path: "new-product",
         },
         {
           label: "Inventory",
           icon: ShoppingBag,
-          path: "/inventory",
+          path: "inventory",
         },
       ],
     },
@@ -86,7 +84,7 @@ const AppSidebar = () => {
         {
           label: "Settings",
           icon: Settings,
-          path: "/settings",
+          path: "settings",
         },
       ],
     },
@@ -117,10 +115,10 @@ const AppSidebar = () => {
 
                     <div className="space-y-1">
                       {item.links.map((link) => (
-                        <SidebarMenuButton asChild>
-                          <a href={link.path} className="relative">
+                        <SidebarMenuButton asChild key={link.label}>
+                          <a href={link.path} className="relative" >
                             <link.icon className="w-4 h-4 text-sidebar-foreground/70 group-hover:text-sidebar-accent-foreground transition-colors" />
-                            <span className="font-medium md:font-semibold md:text-lg">
+                            <span className="font-medium md:text-lg">
                               {link.label}
                             </span>
                             <div className="absolute inset-0 rounded-lg ring-2 ring-transparent group-hover:ring-sidebar-ring/20 transition-all duration-200"></div>

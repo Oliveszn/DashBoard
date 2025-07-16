@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { PackagePlus } from "lucide-react";
+import ProductList from "@/components/ProductList";
+import { deleteProduct, setProducts } from "@/store/ui-slice/product-slice";
+import { useDispatch } from "react-redux";
 
 const fetchProducts = async () => {
   const res = await axios.get("https://dummyjson.com/products");
@@ -8,6 +10,7 @@ const fetchProducts = async () => {
 };
 
 const Products = () => {
+  const dispatch = useDispatch();
   const {
     data: products,
     isLoading,
@@ -18,27 +21,20 @@ const Products = () => {
     queryFn: fetchProducts,
     retry: 2, ///this retries the fetch twice if fails
     staleTime: 1000 * 60 * 5, ///tis keeps data fresh for 5 mins
+    //    onSuccess: (data) => {
+    //   dispatch(setProducts(data));
+    // },
   });
   console.log(products);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error: {(error as Error).message}</p>;
-  return (
-    <div>
-      <h1 className="text-xl md:text-2xl font-medium md:font-bold mb-6">
-        New Products
-      </h1>
+  const deleteItem = (id: number) => {
+    dispatch(deleteProduct(id));
+  };
 
-      <div className="bg-white shadow-md rounded-lg py-8 px-6 border border-slate-200 dark:border-slate-700 dark:bg-slate-800">
-        <div className="flex items-center gap-x-3  mb-4">
-          <div className="rounded-lg bg-blue-500/20 p-2 text-blue-500">
-            <PackagePlus size={26} />
-          </div>
-          <h2 className="text-xl font-medium">All Products</h2>
-        </div>
-      </div>
-    </div>
-  );
+  if (isLoading) return <p>Loadingoliv...</p>;
+  if (isError) return <p>Error: {(error as Error).message}</p>;
+
+  return <ProductList products={products} onDelete={deleteItem} />;
 };
 
 export default Products;

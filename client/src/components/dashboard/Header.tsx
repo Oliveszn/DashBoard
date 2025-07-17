@@ -16,22 +16,6 @@ import { useTheme } from "@/hooks/useTheme";
 
 const Header = () => {
   const dispatch = useAppDispatch();
-  /////darkmode
-  // const darkMode = useAppSelector((state) => state.theme.theme);
-  // useEffect(() => {
-  //   const savedMode = localStorage.getItem("theme") as "light" | "dark" | null;
-  //   if (savedMode === "dark" || savedMode === "light") {
-  //     dispatch(setDarkMode(savedMode));
-  //   } else {
-  //     // If no saved preference, check system preference
-  //     const systemPrefersDark = window.matchMedia(
-  //       "(prefers-color-scheme: dark)"
-  //     ).matches;
-  //     const defaultMode = systemPrefersDark ? "dark" : "light";
-  //     dispatch(setDarkMode(defaultMode));
-  //     localStorage.setItem("theme", defaultMode);
-  //   }
-  // }, [dispatch]);
   const darkMode = useTheme();
   return (
     <header className="flex items-center justify-between px-4 py-3 shadow-md">

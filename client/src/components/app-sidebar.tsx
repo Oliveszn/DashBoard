@@ -47,11 +47,6 @@ const AppSidebar = () => {
           path: "customers",
         },
         {
-          label: "New customer",
-          icon: UserPlus,
-          path: "new-customer",
-        },
-        {
           label: "Verified customers",
           icon: UserCheck,
           path: "verified-customers",
@@ -116,7 +111,7 @@ const AppSidebar = () => {
                     <div className="space-y-1">
                       {item.links.map((link) => (
                         <SidebarMenuButton asChild key={link.label}>
-                          <a href={link.path} className="relative" >
+                          <a href={link.path} className="relative">
                             <link.icon className="w-4 h-4 text-sidebar-foreground/70 group-hover:text-sidebar-accent-foreground transition-colors" />
                             <span className="font-medium md:text-lg">
                               {link.label}

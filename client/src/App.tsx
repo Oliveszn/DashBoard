@@ -9,7 +9,6 @@ import Products from "./pages/Products";
 import Inventory from "./pages/Inventory";
 import NewProducts from "./pages/NewProducts";
 import NotFound from "./pages/NotFound";
-import Home from "./pages/Home";
 import { useTheme } from "./hooks/useTheme";
 
 function App() {
@@ -18,7 +17,6 @@ function App() {
     <div className={darkMode === "dark" ? "dark" : ""}>
       <div className="bg-[#f1f5f9] dark:bg-slate-950">
         <Routes>
-          {/* <Route path="/" element={<Home />} /> */}
           <Route path="/" element={<Layout />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="analytics" element={<Analytics />} />

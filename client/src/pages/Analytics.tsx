@@ -46,7 +46,7 @@ type Analytics = {
 
 const Analytics = () => {
   const products = useAppSelector((state) => state.products.items);
-  const { data, isLoading, isError, error } = useProducts();
+  const { isLoading, isError, error } = useProducts();
   const [analytics, setAnalytics] = useState<Analytics>({
     totalRevenue: 0,
     activeUsers: 0,

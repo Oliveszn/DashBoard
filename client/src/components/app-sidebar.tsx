@@ -6,7 +6,6 @@ import {
   Settings,
   ShoppingBag,
   UserCheck,
-  UserPlus,
   Users,
 } from "lucide-react";
 import {

@@ -34,7 +34,7 @@ type SalesItem = {
 
 const Dashboard = () => {
   const products = useAppSelector((state) => state.products.items);
-  const { data, isLoading, isError, error } = useProducts();
+  const { isLoading, isError, error } = useProducts();
   const [stats, setStats] = useState({
     totalProducts: 0,
     totalRevenue: 0,

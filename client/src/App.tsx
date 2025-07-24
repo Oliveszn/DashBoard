@@ -18,8 +18,8 @@ function App() {
     <div className={darkMode === "dark" ? "dark" : ""}>
       <div className="bg-[#f1f5f9] dark:bg-slate-950">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="" element={<Layout />}>
+          {/* <Route path="/" element={<Home />} /> */}
+          <Route path="/" element={<Layout />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="customers" element={<Customers />} />

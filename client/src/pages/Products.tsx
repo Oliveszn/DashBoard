@@ -10,9 +10,6 @@ const Products = () => {
   const dispatch = useDispatch();
   const products = useAppSelector((state) => state.products.items);
 
-  // Ensure products is always an array
-  const productArray = Array.isArray(products) ? products : [];
-
   const { data, isLoading, isError, error } = useProducts();
 
   useEffect(() => {

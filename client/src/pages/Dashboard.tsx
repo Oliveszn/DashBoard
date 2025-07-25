@@ -13,7 +13,6 @@ import {
   DollarSign,
   Package,
   PencilLine,
-  Star,
   Trash,
   Users,
 } from "lucide-react";
@@ -277,74 +276,6 @@ const Dashboard = () => {
             Top Rated Products
           </p>
         </div>
-        {/* w-full h-full flex flex-col gap-4 */}
-        {/* flex flex-2/3 flex-col overflow-hidden */}
-        {/* <div className="overflow-x-auto max-w-[1280px] "> */}
-        {/* <div className="w-full h-full flex flex-col gap-4 ">
-          <div className="overflow-hidden flex flex-2/3 flex-col">
-            <Table className=" ">
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-lg font-medium">#</TableHead>
-                  <TableHead className="text-lg font-medium">Product</TableHead>
-                  <TableHead className="text-lg font-medium">Price</TableHead>
-                  <TableHead className="text-lg font-medium">Status</TableHead>
-                  <TableHead className="text-lg font-medium">Rating</TableHead>
-                  <TableHead className="text-right text-lg font-medium">
-                    Action
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-
-              <TableBody>
-                {topRatedProducts.map((product) => (
-                  <TableRow key={product.id}>
-                    <TableCell>{product.number}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center text-lg font-medium">
-                        <span>
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            className="size-14 rounded-lg object-cover"
-                          />
-                        </span>
-                        <div className="flex flex-col">
-                          <p>{product.name}</p>
-                          <p className="font-normal text-slate-600 dark:text-slate-400">
-                            {product.description}
-                          </p>
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-lg font-medium">
-                      {product.price}
-                    </TableCell>
-                    <TableCell className="text-lg font-medium">
-                      {product.status}
-                    </TableCell>
-                    <TableCell>
-                      <Star
-                        size={18}
-                        className="fill-yellow-600 stroke-yellow-600"
-                      />
-                      {product.rating.toFixed(1)}
-                    </TableCell>
-                    <TableCell className="flex items-center gap-x-4 text-right">
-                      <button className="text-blue-500 dark:text-blue-600">
-                        <PencilLine size={20} />
-                      </button>
-                      <button className="text-red-500">
-                        <Trash size={20} />
-                      </button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </div> */}
-
         <div
           className="overflow-x-auto w-full -mx-4 px-4"
           style={{

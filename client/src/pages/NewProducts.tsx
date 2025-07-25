@@ -20,16 +20,16 @@ const NewProducts = () => {
           </div>
 
           <form className="grid grid-cols-1 md:grid-cols-2">
-            <div className="flex flex-col gap-y-3 w-full max-w-sm  ">
+            <div className="col-span-2 flex flex-col gap-y-3 w-full  ">
               <Label htmlFor="product">Email</Label>
               <Input
-                type="text"
+                type="email"
                 id="product"
                 placeholder="Enter Product Name"
                 className="px-4 h-10 focus:outline-none"
               />
             </div>
-            <div className="flex flex-col gap-y-3 w-full max-w-sm  ">
+            <div className="col-span-2 flex flex-col gap-y-3 w-full">
               <Label htmlFor="price">Price</Label>
               <Input
                 type="number"

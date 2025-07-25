@@ -88,7 +88,7 @@ const AppSidebar = () => {
     <Sidebar variant="floating">
       <SidebarHeader className="text-2xl mb-6 px-3">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-sidebar-primary rounded-lg flex items-center justify-center">
+          <div className="size-8 bg-sidebar-primary rounded-lg flex items-center justify-center">
             <span className="text-sidebar-primary-foreground font-bold text-sm">
               M
             </span>

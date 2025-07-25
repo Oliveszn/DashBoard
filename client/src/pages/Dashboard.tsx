@@ -26,6 +26,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { useSidebar } from "@/components/ui/sidebar";
 
 type SalesItem = {
   name: string;
@@ -34,6 +35,7 @@ type SalesItem = {
 
 const Dashboard = () => {
   const products = useAppSelector((state) => state.products.items);
+  const { open, isMobile } = useSidebar();
   const { isLoading, isError, error } = useProducts();
   const [stats, setStats] = useState({
     totalProducts: 0,
@@ -43,6 +45,22 @@ const Dashboard = () => {
   });
   // Calculate monthly sales data for the chart
   const [salesData, setSalesData] = useState<SalesItem[]>([]);
+
+  // Calculate available width based on sidebar state
+  const getMaxWidth = () => {
+    if (isMobile) {
+      // On mobile, sidebar is overlay so full width is available
+      return "calc(100vw - 2rem)";
+    }
+
+    if (open) {
+      // Sidebar is open, subtract sidebar width (usually 16rem/256px)
+      return "calc(100vw - 16rem - 2rem)";
+    }
+
+    // Sidebar is closed, only subtract padding
+    return "calc(100vw - 2rem)";
+  };
 
   useEffect(() => {
     const calcStats = () => {
@@ -100,7 +118,7 @@ const Dashboard = () => {
       rating: product.rating,
     }));
   return (
-    <div className="flex flex-col gap-y-4">
+    <div className="flex flex-col gap-y-4 container mx-auto py-4">
       <h1 className="text-xl md:text-2xl font-medium md:font-bold mb-6">
         Dashboard
       </h1>
@@ -253,137 +271,130 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* <div className="flex flex-col gap-y-4 rounded-lg border border-slate-300 bg-white p-4 transition-colors dark:border-slate-700 dark:bg-slate-900">
+      <div className="flex flex-col gap-y-4 rounded-lg border border-slate-300 bg-white p-4 transition-colors dark:border-slate-700 dark:bg-slate-900 w-full max-w-full min-w-0 overflow-hidden">
         <div className="flex items-center gap-x-2">
           <p className="font-medium text-slate-900 transition-colors dark:text-slate-50">
             Top Rated Products
           </p>
         </div>
-        <div className="w-full overflow-x-auto">
-          <table className="min-w-[700px] w-full text-slate-900 dark:text-slate-50">
-            <thead className="sticky top-0 bg-slate-200 transition-[background] dark:bg-slate-800">
-              <tr className="border-b border-slate-300 transition-colors last:border-none dark:border-slate-700">
-                <th className="h-12 px-4 text-start">#</th>
-                <th className="h-12 px-4 text-start">Product</th>
-                <th className="h-12 px-4 text-start">Price</th>
-                <th className="h-12 px-4 text-start">Status</th>
-                <th className="h-12 px-4 text-start">Rating</th>
-                <th className="h-12 px-4 text-start">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="table-body">
-              {topRatedProducts.map((product) => (
-                <tr
-                  key={product.number}
-                  className="border-b border-slate-300 transition-colors last:border-none dark:border-slate-700"
-                >
-                  <td className=" w-fit whitespace-nowrap p-4 font-medium">
-                    {product.number}
-                  </td>
-                  <td className=" w-fit whitespace-nowrap p-4 font-medium">
-                    <div className="flex w-max gap-x-4">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="size-14 rounded-lg object-cover"
-                      />
-                      <div className="flex flex-col">
-                        <p>{product.name}</p>
-                        <p className="font-normal text-slate-600 dark:text-slate-400">
-                          {product.description}
-                        </p>
+        {/* w-full h-full flex flex-col gap-4 */}
+        {/* flex flex-2/3 flex-col overflow-hidden */}
+        {/* <div className="overflow-x-auto max-w-[1280px] "> */}
+        {/* <div className="w-full h-full flex flex-col gap-4 ">
+          <div className="overflow-hidden flex flex-2/3 flex-col">
+            <Table className=" ">
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-lg font-medium">#</TableHead>
+                  <TableHead className="text-lg font-medium">Product</TableHead>
+                  <TableHead className="text-lg font-medium">Price</TableHead>
+                  <TableHead className="text-lg font-medium">Status</TableHead>
+                  <TableHead className="text-lg font-medium">Rating</TableHead>
+                  <TableHead className="text-right text-lg font-medium">
+                    Action
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+
+              <TableBody>
+                {topRatedProducts.map((product) => (
+                  <TableRow key={product.id}>
+                    <TableCell>{product.number}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center text-lg font-medium">
+                        <span>
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="size-14 rounded-lg object-cover"
+                          />
+                        </span>
+                        <div className="flex flex-col">
+                          <p>{product.name}</p>
+                          <p className="font-normal text-slate-600 dark:text-slate-400">
+                            {product.description}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                  <td className=" w-fit whitespace-nowrap p-4 font-medium">
-                    ${product.price}
-                  </td>
-                  <td className=" w-fit whitespace-nowrap p-4 font-medium">
-                    {product.status}
-                  </td>
-                  <td className=" w-fit whitespace-nowrap p-4 font-medium">
-                    <div className="flex items-center gap-x-2">
+                    </TableCell>
+                    <TableCell className="text-lg font-medium">
+                      {product.price}
+                    </TableCell>
+                    <TableCell className="text-lg font-medium">
+                      {product.status}
+                    </TableCell>
+                    <TableCell>
                       <Star
                         size={18}
                         className="fill-yellow-600 stroke-yellow-600"
                       />
                       {product.rating.toFixed(1)}
-                    </div>
-                  </td>
-                  <td className=" w-fit whitespace-nowrap p-4 font-medium">
-                    <div className="flex items-center gap-x-4">
+                    </TableCell>
+                    <TableCell className="flex items-center gap-x-4 text-right">
                       <button className="text-blue-500 dark:text-blue-600">
                         <PencilLine size={20} />
                       </button>
                       <button className="text-red-500">
                         <Trash size={20} />
                       </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div> */}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </div> */}
 
-      <div className="flex flex-col gap-y-4 rounded-lg border border-slate-300 bg-white p-4 transition-colors dark:border-slate-700 dark:bg-slate-900">
-        <div className="flex items-center gap-x-2">
-          <p className="font-medium text-slate-900 transition-colors dark:text-slate-50">
-            Top Rated Products
-          </p>
-        </div>
-        {/* scrollable area */}
-        <div className="overflow-x-auto max-w-[1000px]">
-          <Table className="w-full">
+        <div
+          className="overflow-x-auto w-full -mx-4 px-4"
+          style={{
+            width: "calc(100% + 2rem)",
+            // maxWidth: "calc(100vw - 2rem)",
+            maxWidth: getMaxWidth(),
+          }}
+        >
+          <Table className="min-w-[900px]">
             <TableHeader>
               <TableRow>
-                <TableHead className="text-lg font-medium">#</TableHead>
-                <TableHead className="text-lg font-medium">Product</TableHead>
-                <TableHead className="text-lg font-medium">Price</TableHead>
-                <TableHead className="text-lg font-medium">Status</TableHead>
-                <TableHead className="text-lg font-medium">Rating</TableHead>
+                <TableHead className="text-lg font-medium ">#</TableHead>
+                <TableHead className="text-lg font-medium ">Product</TableHead>
+                <TableHead className="text-lg font-medium ">Price</TableHead>
+                <TableHead className="text-lg font-medium ">Status</TableHead>
                 <TableHead className="text-right text-lg font-medium">
                   Action
                 </TableHead>
               </TableRow>
             </TableHeader>
-
             <TableBody>
               {topRatedProducts.map((product) => (
                 <TableRow key={product.id}>
-                  <TableCell>{product.number}</TableCell>
+                  <TableCell className="text-lg font-medium">
+                    {product.number}
+                  </TableCell>
                   <TableCell>
                     <div className="flex items-center text-lg font-medium">
-                      <span>
+                      <span className="mr-3 flex-shrink-0">
                         <img
                           src={product.image}
                           alt={product.name}
                           className="size-14 rounded-lg object-cover"
                         />
                       </span>
-                      <div className="flex flex-col">
-                        <p>{product.name}</p>
-                        <p className="font-normal text-slate-600 dark:text-slate-400">
+                      <div className="flex flex-col min-w-0 flex-1">
+                        <p className="whitespace-nowrap">{product.name}</p>
+                        <p className="font-normal text-slate-600 dark:text-slate-400 whitespace-nowrap">
                           {product.description}
                         </p>
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell className="text-lg font-medium">
+                  <TableCell className="text-lg font-medium whitespace-nowrap">
                     {product.price}
                   </TableCell>
-                  <TableCell className="text-lg font-medium">
+                  <TableCell className="text-lg font-medium whitespace-nowrap">
                     {product.status}
                   </TableCell>
-                  <TableCell>
-                    <Star
-                      size={18}
-                      className="fill-yellow-600 stroke-yellow-600"
-                    />
-                    {product.rating.toFixed(1)}
-                  </TableCell>
-                  <TableCell className="flex items-center gap-x-4 text-right">
+                  <TableCell className="text-right text-lg font-medium flex items-end gap-x-4">
                     <button className="text-blue-500 dark:text-blue-600">
                       <PencilLine size={20} />
                     </button>

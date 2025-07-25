@@ -1,5 +1,14 @@
 import { ChevronDown, ChevronUp, Search } from "lucide-react";
 import { useMemo, useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { useSidebar } from "@/components/ui/sidebar";
 
 type Customer = {
   id: number;
@@ -149,13 +158,27 @@ const Customers = () => {
     return filtered;
   }, [searchTerm, statusFilter, sortConfig]);
 
+  const { open, isMobile } = useSidebar();
+
+  // Calculate available width based on sidebar state
+  const getMaxWidth = () => {
+    if (isMobile) {
+      return "calc(100vw - 3rem)"; // Account for container padding
+    }
+
+    if (open) {
+      return "calc(100vw - 16rem - 3rem)"; // Sidebar width + padding
+    }
+
+    return "calc(100vw - 3rem)";
+  };
   return (
-    <div className="flex flex-col gap-y-4">
+    <div className="flex flex-col gap-y-4 mx-auto container">
       <h1 className="text-xl md:text-2xl font-medium md:font-bold mb-6">
         Customers
       </h1>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
         <div className="rounded-lg border bg-white p-4 dark:bg-slate-800">
           <p className="text-sm text-gray-600 dark:text-gray-400">
             Total Customers
@@ -220,12 +243,18 @@ const Customers = () => {
         </select>
       </div>
 
-      <div className="rounded-lg border bg-white dark:bg-slate-800">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b bg-gray-50 dark:bg-slate-700">
-                <th
+      <div className="rounded-lg border bg-white dark:bg-slate-800 w-full max-w-full min-w-0 overflow-hidden">
+        <div
+          className="overflow-auto w-full h-[500px] -mx-6 px-6"
+          style={{
+            width: "calc(100% + 3rem)",
+            maxWidth: getMaxWidth(),
+          }}
+        >
+          <Table className="w-full">
+            <TableHeader>
+              <TableRow className="border-b bg-gray-50 dark:bg-slate-700">
+                <TableHead
                   className="cursor-pointer px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-300"
                   onClick={() => handleSort("name")}
                 >
@@ -238,11 +267,11 @@ const Customers = () => {
                         <ChevronDown size={16} />
                       ))}
                   </div>
-                </th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-300">
+                </TableHead>
+                <TableHead className="px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-300">
                   Email
-                </th>
-                <th
+                </TableHead>
+                <TableHead
                   className="cursor-pointer px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-300"
                   onClick={() => handleSort("status")}
                 >
@@ -255,8 +284,8 @@ const Customers = () => {
                         <ChevronDown size={16} />
                       ))}
                   </div>
-                </th>
-                <th
+                </TableHead>
+                <TableHead
                   className="cursor-pointer px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-300"
                   onClick={() => handleSort("orders")}
                 >
@@ -269,8 +298,8 @@ const Customers = () => {
                         <ChevronDown size={16} />
                       ))}
                   </div>
-                </th>
-                <th
+                </TableHead>
+                <TableHead
                   className="cursor-pointer px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-300"
                   onClick={() => handleSort("spent")}
                 >
@@ -283,22 +312,22 @@ const Customers = () => {
                         <ChevronDown size={16} />
                       ))}
                   </div>
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y">
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody className="divide-y">
               {filteredCustomers.map((customer) => (
-                <tr
+                <TableRow
                   key={customer.id}
                   className="hover:bg-gray-50 dark:hover:bg-slate-700"
                 >
-                  <td className="px-6 py-4 text-gray-900 dark:text-gray-200">
+                  <TableCell className="px-6 py-4 text-gray-900 dark:text-gray-200">
                     {customer.name}
-                  </td>
-                  <td className="px-6 py-4 text-gray-900 dark:text-gray-200">
+                  </TableCell>
+                  <TableCell className="px-6 py-4 text-gray-900 dark:text-gray-200">
                     {customer.email}
-                  </td>
-                  <td className="px-6 py-4">
+                  </TableCell>
+                  <TableCell className="px-6 py-4">
                     <span
                       className={`rounded-full px-2 py-1 text-xs ${
                         customer.status === "Active"
@@ -308,17 +337,17 @@ const Customers = () => {
                     >
                       {customer.status}
                     </span>
-                  </td>
-                  <td className="px-6 py-4 text-gray-900 dark:text-gray-200">
+                  </TableCell>
+                  <TableCell className="px-6 py-4 text-gray-900 dark:text-gray-200">
                     {customer.orders}
-                  </td>
-                  <td className="px-6 py-4 text-gray-900 dark:text-gray-200">
+                  </TableCell>
+                  <TableCell className="px-6 py-4 text-gray-900 dark:text-gray-200">
                     ${customer.spent}
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       </div>
     </div>

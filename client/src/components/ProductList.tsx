@@ -7,6 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
+import { useSidebar } from "./ui/sidebar";
 
 interface ProductProps {
   products: any[];
@@ -14,13 +15,27 @@ interface ProductProps {
 }
 
 const ProductList = ({ products, onDelete }: ProductProps) => {
+  const { open, isMobile } = useSidebar();
+
+  // Calculate available width based on sidebar state
+  const getMaxWidth = () => {
+    if (isMobile) {
+      return "calc(100vw - 3rem)"; // Account for container padding
+    }
+
+    if (open) {
+      return "calc(100vw - 16rem - 3rem)"; // Sidebar width + padding
+    }
+
+    return "calc(100vw - 3rem)";
+  };
   return (
-    <div>
+    <div className="mx-auto container">
       <h1 className="text-xl md:text-2xl font-medium md:font-bold mb-6">
-        New Products
+        Products
       </h1>
 
-      <div className="bg-white shadow-md rounded-lg py-8 px-6 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 sticky top-0">
+      <div className="bg-white shadow-md rounded-lg py-8 px-6 border border-slate-200 dark:border-slate-700 dark:bg-slate-800 sticky top-0 w-full max-w-full min-w-0 overflow-hidden">
         <div className="flex items-center gap-x-3  mb-4">
           <div className="rounded-lg bg-blue-500/20 p-2 text-blue-500">
             <PackagePlus size={26} />
@@ -28,9 +43,15 @@ const ProductList = ({ products, onDelete }: ProductProps) => {
           <h2 className="text-xl font-medium">All Products</h2>
         </div>
 
-        <div className="overflow-y-auto max-h-[400px]">
-          <Table>
-            <TableHeader>
+        <div
+          className="overflow-auto w-full h-[400px] -mx-6 px-6"
+          style={{
+            width: "calc(100% + 2rem)",
+            maxWidth: getMaxWidth(),
+          }}
+        >
+          <Table className="min-w-[600px]">
+            <TableHeader className="">
               <TableRow>
                 <TableHead className="text-lg font-medium">#</TableHead>
                 <TableHead className="text-lg font-medium">Product</TableHead>

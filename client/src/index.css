@@ -118,3 +118,60 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .card {
+    @apply rounded-lg border bg-white p-4 dark:bg-slate-800;
+  }
+
+  .card-header {
+    @apply text-sm text-gray-600 dark:text-gray-400;
+  }
+
+  .card-desc {
+    @apply text-2xl font-bold text-gray-900 dark:text-white;
+  }
+
+  .table {
+    @apply h-full w-full text-slate-900 dark:text-slate-50;
+  }
+
+  .table-header {
+    @apply sticky top-0 bg-slate-200 transition-[background] dark:bg-slate-800;
+  }
+
+  .table-row {
+    @apply border-b border-slate-300 transition-colors last:border-none dark:border-slate-700;
+  }
+
+  .table-head {
+    @apply h-12 px-4 text-start;
+  }
+
+  .table-cell {
+    @apply w-fit whitespace-nowrap p-4 font-medium;
+  }
+}
+/* 
+table {
+  min-width: max-content;
+  width: 100%;
+}
+
+.table-wrapper {
+  max-height: 300px;
+  overflow-y: scroll;
+  overflow-x: auto;
+  width: 100%;
+} */
+::-webkit-scrollbar {
+  @apply w-2.5 h-2.5;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-border border-[1px] border-transparent border-solid bg-clip-padding;
+}

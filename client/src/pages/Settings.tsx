@@ -88,7 +88,7 @@ const Settings = () => {
                 Theme
               </label>
               <select
-                className="h-10 rounded-lg border border-slate-300 bg-white appearance-none px-4 text-slate-800 focus:border-blue-500 focus:outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                className="h-10 rounded-lg border border-slate-300 bg-white px-4 text-slate-800 focus:border-blue-500 focus:outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                 value={theme}
                 onChange={handleThemeChange}
               >

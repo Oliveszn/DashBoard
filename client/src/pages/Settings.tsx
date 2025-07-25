@@ -14,7 +14,7 @@ const Settings = () => {
   return (
     <div className="flex flex-col gap-y-4">
       <h1 className="text-xl md:text-2xl font-medium md:font-bold mb-6">
-        Customers
+        Settings
       </h1>
 
       <div className="rounded-lg border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-800">
@@ -88,7 +88,7 @@ const Settings = () => {
                 Theme
               </label>
               <select
-                className="h-10 rounded-lg border border-slate-300 px-4 text-slate-800 focus:border-blue-500 focus:outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+                className="h-10 rounded-lg border border-slate-300 bg-white appearance-none px-4 text-slate-800 focus:border-blue-500 focus:outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                 value={theme}
                 onChange={handleThemeChange}
               >

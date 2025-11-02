@@ -93,7 +93,7 @@ const AppSidebar = () => {
               M
             </span>
           </div>
-          <span className="text-sidebar-foreground">MedApp</span>
+          <span className="text-sidebar-foreground">Shoplulu</span>
         </div>
       </SidebarHeader>
       <SidebarContent>

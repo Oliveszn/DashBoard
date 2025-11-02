@@ -1,22 +1,15 @@
 import ProductList from "@/components/ProductList";
-import { deleteProduct, setProducts } from "@/store/ui-slice/product-slice";
+import { deleteProduct } from "@/store/ui-slice/product-slice";
 import { useDispatch } from "react-redux";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useProducts } from "@/hooks/useProducts";
-import { useEffect } from "react";
 import { useAppSelector } from "@/store/hooks";
 
 const Products = () => {
   const dispatch = useDispatch();
   const products = useAppSelector((state) => state.products.items);
 
-  const { data, isLoading, isError, error } = useProducts();
-
-  useEffect(() => {
-    if (data) {
-      dispatch(setProducts(data));
-    }
-  }, [data, dispatch]);
+  const { isLoading, isError, error } = useProducts();
 
   const deleteItem = (id: number) => {
     dispatch(deleteProduct(id));

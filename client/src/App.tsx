@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/dashboard/Layout";
 import Dashboard from "./pages/Dashboard";
 import Analytics from "./pages/Analytics";
@@ -10,14 +10,29 @@ import Inventory from "./pages/Inventory";
 import NewProducts from "./pages/NewProducts";
 import NotFound from "./pages/NotFound";
 import { useTheme } from "./hooks/useTheme";
+import { useProducts } from "./hooks/useProducts";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setProducts } from "./store/ui-slice/product-slice";
 
 function App() {
   const darkMode = useTheme();
+  const dispatch = useDispatch();
+  const { data } = useProducts();
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setProducts(data));
+    }
+  }, [data, dispatch]);
   return (
     <div className={darkMode === "dark" ? "dark" : ""}>
       <div className="bg-[#f1f5f9] dark:bg-slate-950">
         <Routes>
           <Route path="/" element={<Layout />}>
+            {/* //added this so it redirects to dashboard on / page */}
+            <Route index element={<Navigate to="/dashboard" replace />} />
+
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="customers" element={<Customers />} />
